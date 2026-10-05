@@ -60,7 +60,7 @@ class GameCard extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     best != null
-                        ? 'Best $best'
+                        ? '${game.bestLabel} $best'
                         : (game.players == 2 ? '2 players' : 'Solo'),
                     style: TextStyle(fontSize: 11, color: skin.mutedText),
                   ),
