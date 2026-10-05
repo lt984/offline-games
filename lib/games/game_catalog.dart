@@ -26,6 +26,7 @@ class GameInfo {
     this.starter = false,
     this.unlockCost = 0,
     this.skinTitles = const {},
+    this.bestLabel = 'Best',
   });
 
   final String id;
@@ -45,6 +46,9 @@ class GameInfo {
   /// Merge in Cyberpunk Neon).
   final Map<SkinId, String> skinTitles;
 
+  /// Prefix for the personal best on the hub card.
+  final String bestLabel;
+
   String titleFor(SkinId skin) => skinTitles[skin] ?? title;
 }
 
@@ -60,6 +64,7 @@ const gameCatalog = <GameInfo>[
     icon: '🧋',
     blurb: 'Pour colors between tubes until every tube is one color.',
     starter: true,
+    bestLabel: 'Level',
     skinTitles: {
       SkinId.pixelDungeon: 'Potion Sort',
       SkinId.cyberNeon: 'Plasma Sort',

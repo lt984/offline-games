@@ -34,15 +34,36 @@ Built and tested with Flutter 3.47.6 (Dart 3.13).
   skin, owned skins, unlocked games, personal bests and the haptics setting.
   Every change saves immediately. Damaged or partial saves are repaired field
   by field instead of crashing.
-- **Game screen** (`lib/screens/game_screen.dart`): placeholder page each
-  mini-game will replace. It has a temporary "Claim demo tokens" button so the
-  unlock flow can be tried before real rewards exist.
+- **Game screen** (`lib/screens/game_screen.dart`): opens the playable
+  games by id. Games not built yet show their rules and a temporary "Claim
+  demo tokens" button so the unlock flow can be tried.
+
+## Playable games
+
+- **Boba Sort** (`lib/games/boba_sort/`): pour puzzle with endless levels.
+  Starts at 3 colors and adds one every two levels, up to 9. Every level is
+  generated from its number and checked solvable by a search before you see
+  it. Unlimited undo, no timer. Pays 5 + level tokens; the hub shows your best
+  level and the game resumes after it.
+- **Pancake Merge** (`lib/games/pancake_merge/`): drop-and-merge jar with a
+  fixed-step physics sim. Drag to aim, release to drop. Two of the same item
+  merge into the next of nine tiers; two of the biggest pop for a jackpot.
+  Anything over the dashed line for two seconds ends the run. Earn a bomb
+  every 300 points and tap an item to blast it. Pays score / 40 tokens.
+- **Neon Air Hockey** (`lib/games/air_hockey/`): two players, one phone laid
+  flat. Each player drags the paddle on their half (multi-touch). Player 2's
+  score strip is upside down so it reads from across the table. First to 5
+  wins; the result card turns to face the winner. Pays 10 tokens a match.
+
+Every game re-skins: liquid colors, merge items (sweets, planets, dungeon
+loot), paddle shapes, glow and haptic strength all come from the active skin.
 
 ## Adding a mini-game
 
-1. Build the game as a widget under `lib/games/<id>/`.
-2. Route to it from `GameScreen` by `game.id`.
-3. On a finished round call `ProfileController.submitScore` and `addTokens`.
+1. Put the rules in a plain Dart class under `lib/games/<id>/` so they can be
+   unit tested, and the screen next to it.
+2. Register the screen in `playableGames` in `lib/screens/game_screen.dart`.
+3. On a finished round call `finishRound` from `lib/games/game_kit.dart`.
 4. Read colors, haptics and fonts from `ArcadeSkin.of(context)` so it re-skins
    for free.
 

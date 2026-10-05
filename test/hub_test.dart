@@ -61,13 +61,17 @@ void main() {
   ) async {
     final controller = await pumpHub(tester);
 
-    await tester.tap(find.byKey(const ValueKey('game-boba_sort')));
+    await tester.tap(find.byKey(const ValueKey('tab-action')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('game-dodge_storm')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('demo-reward')));
     await tester.tap(find.byKey(const ValueKey('demo-reward')));
     await tester.pump();
     expect(controller.tokens, 50);
     await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('tab-brain')));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('game-memory_flip')));

@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../games/air_hockey/air_hockey_screen.dart';
+import '../games/boba_sort/boba_sort_screen.dart';
 import '../games/game_catalog.dart';
+import '../games/pancake_merge/pancake_merge_screen.dart';
 import '../state/profile_controller.dart';
 import '../theme/arcade_skin.dart';
 import '../widgets/arcade_background.dart';
 
-/// Landing page for a mini-game. The games themselves plug in here as they
-/// are built; until then this shows the rules and a temporary token reward so
-/// the economy can be tried end to end.
+/// Builders for the mini-games that are playable so far, by game id.
+final Map<String, Widget Function(GameInfo)> playableGames = {
+  'boba_sort': (g) => BobaSortScreen(game: g),
+  'pancake_merge': (g) => PancakeMergeScreen(game: g),
+  'air_hockey': (g) => AirHockeyScreen(game: g),
+};
+
+/// Opens a mini-game. Games that aren't built yet show their rules and a
+/// temporary token reward so the economy can be tried end to end.
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key, required this.game});
 
@@ -19,6 +28,8 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final playable = playableGames[game.id];
+    if (playable != null) return playable(game);
     final skin = ArcadeSkin.of(context);
     final text = Theme.of(context).textTheme;
     return Scaffold(
